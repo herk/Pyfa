@@ -611,12 +611,17 @@ class SkillTreeView(wx.Panel):
 
     def spawnMenu(self, event):
         item = event.GetItem()
+        itemData = self.skillTreeListCtrl.GetItemData(item)
+        if itemData is None:
+            return
+
         self.skillTreeListCtrl.Select(item)
+
         thing = self.skillTreeListCtrl.GetFirstChild(item).IsOk()
         if thing:
             return
 
-        id = self.skillTreeListCtrl.GetItemData(item)[1]
+        id = itemData[1]
         eveItem = Market.getInstance().getItem(id)
 
         srcContext = "skillItem"
